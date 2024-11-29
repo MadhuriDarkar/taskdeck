@@ -6,11 +6,16 @@ import Dropdown from "../Dropdown/Dropdown";
 import CustomInput from "../CustomInput/CustomInput";
 import "./NewList.css";
 
-function NewList({ board, addCard, removeBoard, removeCard, onDragEnd, onDragEnter, updateCard }) {
+function NewList({ board, addCard, removeBoard, removeCard, onDragEnd, onDragEnter, updateCard, draggable, onDragStart, onDragOver, onDrop }) {
   const [showDropdown, setShowDropdown] = useState(false);
   
   return (
-    <div className="board">
+    <div className="board"
+    draggable={draggable}
+    onDragStart={onDragStart}
+    onDragOver={onDragOver}
+    onDrop={onDrop}
+    >
       <div className="board-inner" key={board?.id}>
         <div className="board-header">
           <p className="board-header-title">
@@ -68,7 +73,11 @@ NewList.propTypes = {
   removeCard: PropTypes.func.isRequired,
   onDragEnd: PropTypes.func.isRequired,
   onDragEnter: PropTypes.func.isRequired,
-  updateCard: PropTypes.func.isRequired
+  updateCard: PropTypes.func.isRequired,
+  draggable: PropTypes.bool.isRequired,
+  onDragStart: PropTypes.func.isRequired,
+  onDragOver: PropTypes.func.isRequired,
+  onDrop: PropTypes.func.isRequired
 };
 
 export default NewList;

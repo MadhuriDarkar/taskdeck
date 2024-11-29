@@ -59,6 +59,10 @@ body {
   display: inline-flex;
   gap: 30px;
   height: 100%;
+  cursor: pointer;
+}
+.app-boards:hover {
+  opacity: 0.9;
 }
 
 .app-boards-last {

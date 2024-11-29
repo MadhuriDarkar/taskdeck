@@ -131,6 +131,32 @@ function Dashboard() {
     localStorage.clear();
     window.location.reload();
   };
+  const [draggedBoardId, setDraggedBoardId] = useState(null);
+
+const handleBoardDragStart = (e, boardId) => {
+  setDraggedBoardId(boardId);
+};
+
+const handleBoardDragOver = (e) => {
+  e.preventDefault();
+};
+
+const handleBoardDrop = (e, dropBoardId) => {
+  if (draggedBoardId === dropBoardId) return;
+
+  const draggedBoardIndex = boards.findIndex(board => board.id === draggedBoardId);
+  const dropBoardIndex = boards.findIndex(board => board.id === dropBoardId);
+
+  const newBoards = [...boards];
+  const draggedBoard = newBoards[draggedBoardIndex];
+  
+  newBoards.splice(draggedBoardIndex, 1);
+  newBoards.splice(dropBoardIndex, 0, draggedBoard);
+  
+  setBoards(newBoards);
+  setDraggedBoardId(null);
+};
+
 
   return (
     <div className="app">
@@ -149,6 +175,10 @@ function Dashboard() {
             <NewList
               key={item.id}
               board={item}
+              draggable={true}
+              onDragStart={(e) => handleBoardDragStart(e, item.id)}
+              onDragOver={(e) => handleBoardDragOver(e)}
+              onDrop={(e) => handleBoardDrop(e, item.id)}
               addCard={addCardHandler}
               removeBoard={() => removeBoard(item.id)}
               removeCard={removeCard}
